@@ -22,7 +22,7 @@ a{
 }
 
 
-.input-field input[type=text]:focus {
+.input-field input[type=text,password]:focus {
   border-bottom: 1px solid rgb(6, 68, 240) !important;
   box-shadow: 0 1px 0 0 rgb(7, 26, 190) !important;
 }

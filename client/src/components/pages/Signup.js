@@ -48,6 +48,7 @@ const Signup = () => {
         <div className="mycard">
                 <div className="card auth-card input-field ">
                        <h2>CarParts</h2>
+                       <p>handing you that needed part</p>
                        <input 
                        type="text"
                        placeholder="Full Name"
@@ -61,7 +62,7 @@ const Signup = () => {
                        onChange={(e)=>setEmail(e.target.value) }
                        />
                        <input 
-                       type="text"
+                       type="password"
                        placeholder="password"
                        value={password}
                        onChange={(e)=>setPassword(e.target.value) }

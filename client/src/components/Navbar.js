@@ -1,16 +1,24 @@
 import React,{useContext} from 'react'
 
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
 import {UserContext } from '../App'
 const Navbar = () => {
   const {state,dispatch} = useContext(UserContext)
+  const history = useHistory()
   const renderList = () => {
     if (state) {
       // reuturn the array as more than one is needed as output
-    // map maybe used as well
       return [
         <li><Link to="/profile">Profile</Link></li>,
-        <li><Link to="/create">Create Post</Link></li>
+        <li><Link to="/create">Create Post</Link></li>,
+        <li>
+        <button className="btn waves-effect waves-light #2196f3 blue darken-1" onClick={()=>{
+             localStorage.clear()
+             dispatch({type:"clear"})
+             // redirect the app to Login page when logout 
+             history.push('/signin')
+           }}>Log Out</button>
+        </li>
       ]
       }else {
         return[

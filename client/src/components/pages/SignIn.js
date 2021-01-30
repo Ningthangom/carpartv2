@@ -44,8 +44,8 @@ const SignIn = () => {
                 //the dispatch will go to userReducer
                 dispatch({type:"USER", payload:data.user})
 
-
-                M.toast({html: "You have successfullysigned in",classes:"#00c853 green accent-4"})
+                M.toast({html: "You have successfully signed in",classes:"#00c853 green accent-4"})
+                // why isn't this happening when sigin in
                 history.push('/')
 
             }
@@ -67,7 +67,7 @@ const SignIn = () => {
                        onChange={(e)=>setEmail(e.target.value) }
                        />
                        <input 
-                       type="text"
+                       type="password"
                        placeholder="password"
                        value={password}
                        onChange={(e)=>setPassword(e.target.value) }

@@ -3,6 +3,7 @@ import React, {useState,useEffect} from 'react'
 const Home = () => {
 
     const [data,setData] = useState([ ])
+    
     useEffect(() => {
         fetch('/allpost', {
             headers:{
@@ -15,6 +16,7 @@ const Home = () => {
             // update data
             setData(result.posts)
         })
+        // this emty array will stop the app from updating itself 
     },[])
     return (
       <div className="home">
@@ -22,10 +24,14 @@ const Home = () => {
               data.map(item => {
 
                 return(
-                    <div className="card home-card">
+                    <div className="card home-card" key={item._id}>
                             <h5>{item.postedBy.className}</h5>
                             <div className="card-mage">
-                                <img alt="" src ={item.image} />
+                                <img alt="" src ={item.image} 
+                                style= {{
+                                    maxWidth :"500px",
+
+                                } } />
                             </div>
                             <div className="card-content">
                                     <i className="material-icons" style={{color:"red"}}>favorite</i>

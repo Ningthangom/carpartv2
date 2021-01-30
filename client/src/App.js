@@ -20,7 +20,7 @@ const Routing =() => {
       const history= useHistory();
 
       // this is for when user close the application but did not log in
-      const {dispatch} = useContext(UserContext)
+      const {state,dispatch} = useContext(UserContext)
 
       useEffect( ()=> {
             // user in localstorage is string it needs to be changed into objects
@@ -35,7 +35,7 @@ const Routing =() => {
             }else {
                   history.push('/signin')
             }
-      })
+      },[])
       return (
       <Switch>
                   <Route exact path="/">
