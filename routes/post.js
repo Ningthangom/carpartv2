@@ -98,7 +98,7 @@ router.put('/uninterested',requiredLogin,(req,res)=>{
 router.delete('/deletepost/:postId',requiredLogin,(req,res)=> {
     Post.findOne({_id:req.params.postId})
     .populate("postedBy","_id")
-    .execute((err, post)=> {
+    .exec((err, post)=> {
         if(err || !post) {
             return res.status(422).json({error:err})
         }
@@ -106,7 +106,7 @@ router.delete('/deletepost/:postId',requiredLogin,(req,res)=> {
         if(post.postedBy._id.toString() === req.user._id.toString()) {
                 post.remove()
                 .then(result => {
-                    res.json({message: "successfully delected"})
+                    res.json(result)
                 }).catch(err => {
                     console.log(err)
                 })
