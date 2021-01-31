@@ -1,6 +1,35 @@
-import React from 'react'
+import React,{useEffect,useState,useContext} from 'react'
+import {UserContext} from '../../App'
 
+/* const deletePost = (postid) => {
+    console.log("deletePost is firing")
+    fetch(`/deletepost/${postid}`,{
+        method: "delete",
+        headers: {
+            Authorization: "Bearer "+localStorage.getItem('jwt')
+        }
+    }).then(res=> res.json())
+    .then(result=> {
+        console.log(result)
+    })
+} */
 const Profile = () => {
+    const [myimage, setImage] = useState([])
+    // for getting the user info
+    const {state,dispatch} = useContext(UserContext)
+
+    useEffect(()=> {
+        fetch('/mypost',{
+            headers: {
+                "Authorization": "Bearer "+ localStorage.getItem('jwt')
+            }
+        }).then(res=>res.json())
+        .then(result=> {
+            console.log(result)
+            setImage(result.mypost)
+        })
+
+    },[])
     return (
         <div style={{
             maxWidth:"550px",
@@ -23,7 +52,7 @@ const Profile = () => {
                                 />
                         </div>
                         <div>
-                            <h4>rahamat</h4>
+                            <h4>{state?state.name:"loading"}</h4>
                             <div style ={{display:"flex",justifyContent:"space-between", width:"108%"}}>
                                 <h5>40 posts </h5>
                                 <h5> 40 followers</h5>
@@ -33,19 +62,42 @@ const Profile = () => {
                         </div>
                 </div>
                 <div className="gallery">
-                    <img   className = "item"
-                            alt="" 
-                            src = "https://images.unsplash.com/photo-1611433216945-3e59dc2de4e0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1100&q=80"/>
-                     <img   className = "item"
-                            alt="" 
-                            src = "https://images.unsplash.com/photo-1611433216945-3e59dc2de4e0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1100&q=80"/>
-                     <img   className = "item"
-                            alt="" 
-                            src = "https://images.unsplash.com/photo-1611433216945-3e59dc2de4e0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1100&q=80"/>
-                     <img   className = "item"
-                            alt="" 
-                            src = "https://images.unsplash.com/photo-1611433216945-3e59dc2de4e0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1100&q=80"/>
-                    
+                    {
+                        myimage.map(item=> {
+                            return(
+                                <div className="card home-card" key={item._id}>
+                               {/*  <h5>{item.postedBy.className}</h5> */}
+                                <div className="card-mage">
+                                    <img alt="" src ={item.image} 
+                                    style= {{
+                                        maxWidth :"500px"
+                                    } } />
+                                </div>
+                                <div className="card-content">
+                                      {/*   <i className="material-icons" style={{color:"red"}}>favorite</i> */}
+                                        <h6>{item.title}</h6>
+                                        <p>{item.body}</p>
+                                        {/* <input type="text" placeholder="add a comment"/> */}
+                                  {/*      <a href="https://www.paypal.com/paypalme/ningthangom"> <button  className="btn waves-light #2196f3 blue" style={{
+                                            margin:"10px"
+                                        }}>edit</button></a>
+                                        <button className="btn waves-light #2196f3 blue"  style={{
+                                            margin:"10px"
+                                        }}>sold</button> */}
+                                          <button className="btn waves-light #2196f3 blue"  style={{
+                                            margin:"10px"
+                                        }}
+                                      /*   onClick={deletePost()} */
+                                       
+                                        >cancel</button> 
+                                </div>
+                      </div>
+    
+                             /*    <img   className = "item"
+                                src = {item.image} alt={item.title}/> */
+                            )
+                        })
+                    }
                 </div>
         </div>
     )

@@ -15,6 +15,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    interested:[{type:ObjectId,ref:"User"}],
     //getting user from other schema
     postedBy: {
         type:ObjectId,

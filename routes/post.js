@@ -57,4 +57,60 @@ router.get('/mypost',requiredLogin,(req,res) => {
     })
 })
 
+// use put for updating 
+router.put('/interested',requiredLogin,(req,res)=>{
+    // postId is comig from the front end
+    Post.findByIdAndUpdate(req.body.postId, {
+        // this is the id of the user who is interested in the product
+        $push: {interested:req.user._id}
+    }, {
+        // updated post
+        new:true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }else{
+            res.json(result)
+        }
+
+    })
+ 
+})
+router.put('/uninterested',requiredLogin,(req,res)=>{
+    // postId is comig from the front end
+    Post.findByIdAndUpdate(req.body.postId, {
+        // this is the id of the user who is interested in the product
+        $pull: {interested:req.user._id}
+    }, {
+        // updated post
+        new:true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }else{
+            res.json(result)
+        }
+
+    })
+ 
+})
+
+router.delete('/deletepost/:postId',requiredLogin,(req,res)=> {
+    Post.findOne({_id:req.params.postId})
+    .populate("postedBy","_id")
+    .execute((err, post)=> {
+        if(err || !post) {
+            return res.status(422).json({error:err})
+        }
+        // in order to change objects into string use toString function
+        if(post.postedBy._id.toString() === req.user._id.toString()) {
+                post.remove()
+                .then(result => {
+                    res.json({message: "successfully delected"})
+                }).catch(err => {
+                    console.log(err)
+                })
+        }
+    })
+})
 module.exports = router

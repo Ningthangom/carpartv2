@@ -74,12 +74,12 @@ const CreatePost = ()=> {
         }}
         >
             <input type="text"
-             placeholder="title" 
+             placeholder="make year model part" 
              value={title}
              onChange={(e) => setTitle(e.target.value)}
              />
             <input type="text"
-             placeholder="body"
+             placeholder="detail"
              value={body}
              onChange={(e) => setBody(e.target.value)}
 

@@ -48,7 +48,7 @@ const Signup = () => {
         <div className="mycard">
                 <div className="card auth-card input-field ">
                        <h2>CarParts</h2>
-                       <p>handing you that needed part</p>
+                       <p>handing you the part</p>
                        <input 
                        type="text"
                        placeholder="Full Name"

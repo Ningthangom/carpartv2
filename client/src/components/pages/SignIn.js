@@ -47,6 +47,7 @@ const SignIn = () => {
                 M.toast({html: "You have successfully signed in",classes:"#00c853 green accent-4"})
                 // why isn't this happening when sigin in
                 history.push('/')
+         window.location.reload()  
 
             }
            
@@ -60,6 +61,7 @@ const SignIn = () => {
         <div className="mycard">
                 <div className="card auth-card input-field ">
                        <h2>CarParts</h2>
+                       <p>handing you the part</p>
                        <input 
                        type="text"
                        placeholder="email"
