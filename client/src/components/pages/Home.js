@@ -92,18 +92,25 @@ const Home = () => {
         }).then(res=> res.json())
         .then(result=> {
             console.log(result)
-        })
-    }
+              const newData = data.filter(item=>{
+                return item._id !== result._id
+            })
+            setData(newData) 
+        }).catch(err=>{
+            console.log(err)
+        }) 
+}
     return (
       <div className="home">
           {
               data.map(item => {
                   console.log(state)
+                  console.log(item._id)
                   console.log(item.interested)
 
                 return(
                     <div className="card home-card" key={item._id}>
-                            <h5>{item.postedBy.name}  {item.postedBy._id === state._id
+                            <h5>{item.postedBy.name}  {item.postedBy._id === state.id
                             && <i className="material-icons" style={{
                                 float:"right"
 
@@ -122,7 +129,7 @@ const Home = () => {
                                     <i className="material-icons" style={{color:"red"}}>favorite</i>
                                   {/* dot includes is not working or it's not functioning */}
                                   {/* The ternary operator in React */}
-                                    {item.interested.includes(state._id)
+                                    {item.interested.includes(state.id)
                                     ? 
                                          <i className="material-icons" style={{margin:"10px"}} 
                                          onClick={()=>{
