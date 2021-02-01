@@ -1,6 +1,8 @@
 import React,{useEffect,useState,useContext} from 'react'
 import {UserContext} from '../../App'
-
+// this useParams is used for accesing userid in app.js /profile/userid
+import {useParams} from 'react-router-dom'
+import axios from 'axios';
 
 /* const deletePost = (postid) => {
     console.log("deletePost is firing")
@@ -18,19 +20,23 @@ const Profile = () => {
     const [myimage, setImage] = useState([])
     // for getting the user info
     const {state,dispatch} = useContext(UserContext)
-
+    // this user id comes from app.js (<Route path="/profile/:userid">)
+     const {userid} = useParams() 
+    console.log("this is ",userid,"from userprofile")
+// http://localhost:5000
     useEffect(()=> {
-        fetch('/mypost',{
+        fetch(`/user/${userid}`,{
+            method:"get",
             headers: {
                 "Authorization": "Bearer "+ localStorage.getItem('jwt')
             }
         }).then(res=>res.json())
         .then(result=> {
             console.log(result)
-            setImage(result.mypost)
+          /*   setImage(result.mypost) */
         })
 
-    },[])
+    },[userid]) 
     return (
         <div style={{
             maxWidth:"550px",

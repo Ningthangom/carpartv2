@@ -83,6 +83,8 @@ const Home = () => {
         })
     }
     const deletePost = (postid) => {
+        // console log will not show in dev tool for long as the page is reloaded 
+        // its believe to be due to onclick function
         console.log("deletePost is firing")
         fetch(`/deletepost/${postid}`,{
             method: "delete",

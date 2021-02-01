@@ -8,7 +8,9 @@ import Signin from "./components/pages/SignIn"
 import Profile from "./components/pages/Profile"
 import Signup from "./components/pages/Signup"
 import CreatePost from "./components/pages/CreatePost"
+import UserProfile from "./components/pages/UserProfile"
 import {reducer,initialState} from "./reducers/userReducer"
+
 
 
 // export this, to import in Signin page
@@ -44,7 +46,8 @@ const Routing =() => {
                   <Route path= "/signin">
                         <Signin/>
                   </Route>
-                  <Route path="/profile">
+                  {/* exact is used to make sure the profile is not shown in Userprofile */}
+                  <Route  exact path="/profile">
                         <Profile/>
                   </Route>
                   <Route path="/signup">
@@ -52,6 +55,9 @@ const Routing =() => {
                   </Route>
                   <Route path="/create">
                         <CreatePost/>
+                  </Route>
+                  <Route path="/profile/:userid">
+                        <UserProfile/>
                   </Route>
        </Switch>
       )
