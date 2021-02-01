@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express()
 const mongoose = require('mongoose')
-const PORT = 5000;
+const PORT = 5000
 const {MONGOURI}= require('./key')
 
 // mongo Atlas password: 9YjPOWVTkram4YDs
@@ -23,10 +23,12 @@ require('./models/user')
 require('./models/post')
 
 
+
 // to pass incoming request to json
 app.use(express.json())
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
+app.use(require('./routes/user'))
 
 
 
