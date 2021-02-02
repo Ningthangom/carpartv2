@@ -5,7 +5,9 @@ import M from 'materialize-css'
 
 const CreatePost = ()=> {
     const history = useHistory();
+    
     const [title,setTitle] = useState("")
+    const [price,setPrice] = useState("")
     const [body,setBody] = useState("")
     const [image, setImage] = useState("")
     const [url, setUrl] = useState("")
@@ -22,6 +24,7 @@ const CreatePost = ()=> {
                 },
                 body:JSON.stringify({
                     title,
+                    price,
                     body,
                     imageurl:url
                 })
@@ -77,6 +80,11 @@ const CreatePost = ()=> {
              placeholder="make year model part" 
              value={title}
              onChange={(e) => setTitle(e.target.value)}
+             />
+            <input type="text"
+             placeholder="price" 
+             value={price}
+             onChange={(e) => setPrice(e.target.value)}
              />
             <input type="text"
              placeholder="detail"

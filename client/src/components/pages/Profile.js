@@ -31,6 +31,8 @@ const Profile = () => {
         })
 
     },[])
+
+
     return (
         <div style={{
             maxWidth:"550px",
@@ -58,8 +60,8 @@ const Profile = () => {
                                 <h5>40 posts </h5>
                                 <h5> 40 followers</h5>
                                 <h5> 40 following</h5>
-
                             </div>
+                        
                         </div>
                 </div>
                 <div className="gallery">

@@ -20,9 +20,9 @@ router.get('/allpost',requiredLogin,(req,res) => {
 
 
 router.post('/createpost',requiredLogin, (req,res) => {
-    const {title,body,imageurl} = req.body
-    console.log(title,body,imageurl);
-    if (!title || !body || !imageurl ) {
+    const {title,price,body,imageurl} = req.body
+    console.log(title,price,body,imageurl);
+    if (!title ||  !price || !body || !imageurl ) {
         res.status.apply(422).json({error: "Please file all the boxes"})
 
     }
@@ -33,6 +33,7 @@ router.post('/createpost',requiredLogin, (req,res) => {
   req.user.password = undefined
     const post = new Post ({
         title,
+        price,
         body,
        image: imageurl,
         postedBy: req.user

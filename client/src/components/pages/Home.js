@@ -2,7 +2,8 @@ import React, {useState,useEffect,useContext} from 'react'
 
 // to acces the user for hiding interested button
 import {UserContext} from '../../App'
-
+//  import link for making view profile of the account that posted that post
+import {Link} from 'react-router-dom'
 
 const Home = () => {
 
@@ -112,7 +113,7 @@ const Home = () => {
 
                 return(
                     <div className="card home-card" key={item._id}>
-                            <h5>{item.postedBy.name}  {item.postedBy._id === state.id
+                            <h5><Link to={item.postedBy._id !== state.id ? "/profile/"+item.postedBy._id : "/profile"}>{item.postedBy.name}</Link>  {item.postedBy._id === state.id
                             && <i className="material-icons" style={{
                                 float:"right"
 
@@ -150,6 +151,7 @@ const Home = () => {
                                    
                                     <h6>{item.interested.length} interested</h6>
                                     <h6>{item.title}</h6>
+                                    <h8>${item.price}</h8>
                                     <p>{item.body}</p>
                                    {/*  <input type="text" placeholder="add a comment"/> */}
                                    <a href="https://www.paypal.com/paypalme/ningthangom"> <button  className="btn waves-light #2196f3 blue" style={{
