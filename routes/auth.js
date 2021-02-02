@@ -38,7 +38,7 @@ router.post('/signup', (req,res)=> {
                 })
                 user.save()
                 .then (user=> {
-                    res.json({ message: " Save successfully"})
+                    res.json({ message: " sing up successfully"})
                 })
                 .catch (err => {
                     console.log(err)
@@ -69,8 +69,8 @@ router.post('/signin', (req,res)=> {
                         //  giving user a tokent to access protected resources
                         const token = jwt.sign({_id: savedUser._id},JWT_SECRET)
                         // destructuring the objects
-                        const {_id,name,email} = savedUser
-                        res.json({token,_id,name,email})
+                        const {_id,name,email,followers,following} = savedUser
+                        res.json({token,_id,name,email,followers,following})
                     }else {
                         res.status(422).json({error: "Invalid email or password"})
                     }

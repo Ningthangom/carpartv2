@@ -19,6 +19,8 @@ import axios from 'axios';
 const Profile = () => {
     // set the initial state as null 
     const [userProfile, setUserProfile] = useState(null)
+    // for showing and hiding follow button 
+    const [showfollow,setShowFollow] = useState(true)
     // for getting the user info
     const {state,dispatch} = useContext(UserContext)
     // this user id comes from app.js (<Route path="/profile/:userid">)
@@ -34,6 +36,7 @@ const Profile = () => {
         }).then(res=>res.json())
         .then(result=> {
             console.log(result)
+           
             setUserProfile(result)
           /*   setImage(result.mypost) */
         })
@@ -41,7 +44,9 @@ const Profile = () => {
     },[]) 
 
     const followUser = ()=> {
+        console.log("followUser is called")
         fetch('/follow', {
+            
             // put is for updating the data
             method: "put",
             headers: {
@@ -58,6 +63,67 @@ const Profile = () => {
         // get the result
         .then(result => {
             console.log(result)
+            // this dispatch will update user
+            dispatch({type:"UPDATE",payload:{following:result.following, followers:result.followers}})
+            //update local storage
+            localStorage.setItem("user",JSON.stringify(result))
+            //update the state
+            // use a callbak to get the previous state
+            setUserProfile((prevState)=> {
+                return{
+                    ...prevState,
+                    // overwrite the user by setting it to the new result
+                    user:{
+                        ...prevState.user,
+                        followers:[
+                            // add id from result into followers array from the prevstate
+                            ...prevState.user.followers,result._id
+                        ]
+                    }
+                }
+            })
+            setShowFollow(false)
+        })
+   }
+    const unfollowUser = ()=> {
+        console.log("unfollowUser is called")
+        fetch('/unfollow', {
+            
+            // put is for updating the data
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer "+localStorage.getItem('jwt')
+            },
+            body:JSON.stringify({
+                // unfollowId from the backend is set to current userid
+                ufollowId:userid
+            })
+        })
+        // send the response to json
+        .then(res=>res.json())
+        // get the result
+        .then(result => {
+            console.log(result)
+            // this dispatch will update user
+            dispatch({type:"UPDATE",payload:{following:result.following, followers:result.followers}})
+            //update local storage
+            localStorage.setItem("user",JSON.stringify(result))
+            //update the state
+            // use a callbak to get the previous state
+            setUserProfile((prevState)=> {
+                const newFollowers = prevState.user.followers.filter(item => item !== result._id)
+                return{
+                    ...prevState,
+                    // overwrite the user by setting it to the new result
+                    user:{
+                        ...prevState.user,
+                        followers:newFollowers
+                    }
+                }
+            })
+            //this will reset the unfollow button to follow
+            setShowFollow(true)
         })
    }
 
@@ -90,11 +156,26 @@ const Profile = () => {
                         <h5>{userProfile.user.email}</h5>
                         <div style ={{display:"flex",justifyContent:"space-between", width:"108%"}}>
                             <h5> {userProfile.posts.length} posts </h5>
-                            <h5> 40 followers</h5>
-                            <h5> 40 following</h5>         
+                            <h5> {userProfile.user.followers.length} followers</h5>
+                            <h5> {userProfile.user.following.length} following</h5>         
                         </div>
-                        <button className="btn waves-effect waves-light #2196f3 blue darken-1"
+                        {showfollow?
+                         <button 
+                         style={{
+                            margin:"10px"
+                         }} 
+                         className="btn waves-effect waves-light #2196f3 blue darken-1"
                          onClick={followUser}>follow</button>
+                         :
+                         <button 
+                         style={{
+                            margin:"10px"
+                         }} 
+                         className="btn waves-effect waves-light #2196f3 blue darken-1"
+                         onClick={unfollowUser}>unfollow</button>
+                        }
+                       
+                      
                     </div>
             </div>
             <div className="gallery">
@@ -120,12 +201,12 @@ const Profile = () => {
                                     <button className="btn waves-light #2196f3 blue"  style={{
                                         margin:"10px"
                                     }}>sold</button> */}
-                                      <button className="btn waves-light #2196f3 blue"  style={{
+                                      {/* <button className="btn waves-light #2196f3 blue"  style={{
                                         margin:"10px"
                                     }}
-                                  /*   onClick={deletePost()} */
+                                 
                                    
-                                    >cancel</button> 
+                                    >cancel</button>  */}
                             </div>
                   </div>
 

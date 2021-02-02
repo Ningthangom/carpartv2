@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
     },
     price: {
         type:String,
-        required:true,
+        // required:true,
     },
     body: {
         type: String,

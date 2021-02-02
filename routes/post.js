@@ -18,6 +18,18 @@ router.get('/allpost',requiredLogin,(req,res) => {
         ])
 })
 
+router.get('/postsfromfollowing',requiredLogin,(req,res) => {
+    // if postedBy are in follwing array, return Post
+    Post.find({postedBy:{$in:req.user.following}})
+        .populate("postedBy","_id name")
+        .then(posts => {
+            res.json({posts})
+        })
+        .catch(err => [
+            console.log(err)
+        ])
+})
+
 
 router.post('/createpost',requiredLogin, (req,res) => {
     const {title,price,body,imageurl} = req.body

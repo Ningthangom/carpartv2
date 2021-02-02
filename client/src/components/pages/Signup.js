@@ -67,6 +67,7 @@ const Signup = () => {
                        value={password}
                        onChange={(e)=>setPassword(e.target.value) }
                        />
+                       
                          <button className="btn waves-effect waves-light #2196f3 blue" onClick={PostData}>Sign Up</button>
                          <h6>
                              <Link to="/signin">Already Have an account?</Link>

@@ -39,7 +39,7 @@ router.get('/user/:id',requiredLogin,(req,res)=>{
         // firstly the following in user A shoud be incremented by 1 
         //secondly the followers in user B should be increment by 1
      
-router.put('follow',requiredLogin,(req,res) => {
+router.put('/follow',requiredLogin,(req,res) => {
     // this followId will be coming from front end and update the body
      // and this id is the id of the user that has been followed
     User.findByIdAndUpdate(req.body.followId, {
@@ -61,7 +61,9 @@ router.put('follow',requiredLogin,(req,res) => {
     },
     {
         new:true
-    }).then(result => {
+    })
+    .select("-password")
+    .then(result => {
         res.json(result)
     }).catch(err => {
         return res.status(422).json({error:err})
@@ -69,7 +71,7 @@ router.put('follow',requiredLogin,(req,res) => {
   })
 })
 
-router.put('unfollow',requiredLogin,(req,res) => {
+router.put('/unfollow',requiredLogin,(req,res) => {
     // this unfollowId will be coming from front end and update the body
         // and this id is the id of the user that has been followed
     User.findByIdAndUpdate(req.body.unfollowId, {
@@ -92,7 +94,9 @@ router.put('unfollow',requiredLogin,(req,res) => {
     },
     {
         new:true
-    }).then(result => {
+    })
+    .select("-password")
+    .then(result => {
         res.json(result)
     }).catch(err => {
         return res.status(422).json({error:err})

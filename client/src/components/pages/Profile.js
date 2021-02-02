@@ -15,7 +15,7 @@ import {UserContext} from '../../App'
     })
 } */
 const Profile = () => {
-    const [myimage, setImage] = useState([])
+    const [myposts, setMyPosts] = useState([])
     // for getting the user info
     const {state,dispatch} = useContext(UserContext)
 
@@ -27,7 +27,7 @@ const Profile = () => {
         }).then(res=>res.json())
         .then(result=> {
             console.log(result)
-            setImage(result.mypost)
+            setMyPosts(result.mypost)
         })
 
     },[])
@@ -56,17 +56,19 @@ const Profile = () => {
                         </div>
                         <div>
                             <h4>{state?state.name:"loading"}</h4>
+                            <h6>{state?state.email:"loading"}</h6>
                             <div style ={{display:"flex",justifyContent:"space-between", width:"108%"}}>
-                                <h5>40 posts </h5>
-                                <h5> 40 followers</h5>
-                                <h5> 40 following</h5>
+                                <h5>{myposts.length} posts </h5>
+                                <h5> {state?state.followers.length: "0"} followers</h5>
+                                <h5>{state?state.following.length: "0"} following</h5>
                             </div>
-                        
+                            {/* <button className="btn waves-effect waves-light #2196f3 blue darken-1"
+                         onClick={followUser}>follow</button> */}
                         </div>
                 </div>
                 <div className="gallery">
                     {
-                        myimage.map(item=> {
+                        myposts.map(item=> {
                             return(
                                 <div className="card home-card" key={item._id}>
                                {/*  <h5>{item.postedBy.className}</h5> */}
@@ -87,12 +89,12 @@ const Profile = () => {
                                         <button className="btn waves-light #2196f3 blue"  style={{
                                             margin:"10px"
                                         }}>sold</button> */}
-                                          <button className="btn waves-light #2196f3 blue"  style={{
+                                          {/* <button className="btn waves-light #2196f3 blue"  style={{
                                             margin:"10px"
-                                        }}
-                                      /*   onClick={deletePost()} */
+                                        }} */}
+                                      {/* /*   onClick={deletePost()} */ }
                                        
-                                        >cancel</button> 
+                                        {/* // >cancel</button>  */}
                                 </div>
                       </div>
     
