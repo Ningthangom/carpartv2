@@ -8,20 +8,19 @@ const Signup = () => {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [profilepic,setProfilepic]=useState("")
-    const [urlpropic,setUrlpropic]=useState("")
+    const [image,setImage]=useState("")
+    const [url,setUrl]=useState("")
     
     useEffect(()=> {
-        if(urlpropic){
+        if(url){
             uplaodFields()
         }
+    },[url])
 
-    },[urlpropic])
-
-    const uploadProfilepic = ()=> {
+    const uploadImage = ()=> {
                     // Formdata for fileuploading
                     const data = new FormData()
-                    data.append("file",profilepic)
+                    data.append("file",image)
                     data.append("upload_preset","carparts_main")
                     data.append("cloud_name","ningthangom")
                     fetch("	https://api.cloudinary.com/v1_1/ningthangom/image/upload",{
@@ -30,7 +29,7 @@ const Signup = () => {
                     })
                     .then(res=> res.json())
                     .then(data=>{
-                        setUrlpropic(data.urlpropic)
+                        setUrl(data.url)
                     }).catch(err=>{
                         console.log(err)
                     })
@@ -51,7 +50,7 @@ const Signup = () => {
                 name,
                 password,
                 email,
-                profileImage:urlpropic
+                pic:url
             })
         }).then(res=>res.json())
         .then(data=>{
@@ -69,11 +68,11 @@ const Signup = () => {
 
     }
     const PostData = () => {
-            if(profilepic) {
-                uploadProfilepic()
-            }
-            uplaodFields()
-        
+            if(image) {
+                uploadImage()
+            }else{
+                uplaodFields()   
+            }     
         }
 
     return (
@@ -103,7 +102,7 @@ const Signup = () => {
                             <div className="btn #3949ab indigo darken-1">
                                 <span>profile Image</span>
                                 <input type="file"
-                                onChange = {(e)=>setProfilepic(e.target.files[0])}
+                                onChange = {(e)=>setImage(e.target.files[0])}
                                 />
                             </div>
                             <div className="file-path-wrapper">

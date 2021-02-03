@@ -31,8 +31,8 @@ const Profile = () => {
        // if there is no id of current login user inside following which is inside state 
        // then show follow button
        // else show follow button
-  
-       const [showfollow,setShowFollow] = useState(state?!state.following.includes(userid): true)
+    //    const followingUserid = (state? !state.following.includes(userid) : true)
+       const [showfollow,setShowFollow] =  useState(state?!state?.following?.includes(userid):true)
 // http://localhost:5000
     useEffect(()=> {
         fetch(`/user/${userid}`,{
@@ -150,7 +150,7 @@ const Profile = () => {
                 borderBottom: "1px solid grey"
             }} >
                     <div>
-                            <img alt = ""  src={userProfile.user.profileImage}
+                            <img alt = ""  src={userProfile.user.pic}
                              style= {{width:"160px", height: "160px",
                                              borderRadius: "80px",
                                              margin:"20px",

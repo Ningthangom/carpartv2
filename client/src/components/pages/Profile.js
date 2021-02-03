@@ -18,6 +18,7 @@ const Profile = () => {
     const [myposts, setMyPosts] = useState([])
     // for getting the user info
     const {state,dispatch} = useContext(UserContext)
+    console.log("this is state",state)
 
     useEffect(()=> {
         fetch('/mypost',{
@@ -46,7 +47,7 @@ const Profile = () => {
                     borderBottom: "1px solid grey"
                 }} >
                         <div>
-                                <img alt = ""  src={state?state.profileImage:"loading"}
+                                <img alt = ""  src={state?state.pic:"loading"}
                                  style= {{width:"160px", height: "160px",
                                                  borderRadius: "80px",
                                                  margin:"20px",
@@ -59,8 +60,8 @@ const Profile = () => {
                             <h6>{state?state.email:"loading"}</h6>
                             <div style ={{display:"flex",justifyContent:"space-between", width:"108%"}}>
                                 <h5>{myposts.length} posts </h5>
-                                <h5> {state?state.followers.length: "0"} followers</h5>
-                                <h5>{state?state.following.length: "0"} following</h5>
+                                <h5> {state?state?.followers?.length: "0"} followers</h5>
+                                <h5>{state?state?.following?.length: "0"} following</h5>
                             </div>
                             {/* <button className="btn waves-effect waves-light #2196f3 blue darken-1"
                          onClick={followUser}>follow</button> */}
