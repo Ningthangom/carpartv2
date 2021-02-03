@@ -22,7 +22,11 @@ a{
 }
 
 
-.input-field input[type=text,password]:focus {
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid rgb(6, 68, 240) !important;
+  box-shadow: 0 1px 0 0 rgb(7, 26, 190) !important;
+}
+.input-field input[type=password]:focus {
   border-bottom: 1px solid rgb(6, 68, 240) !important;
   box-shadow: 0 1px 0 0 rgb(7, 26, 190) !important;
 }
@@ -48,4 +52,8 @@ a{
   top:30px !important;
   right: 30px !important;
   left:auto !important;
+}
+
+.material-icons {
+  cursor: pointer;
 }

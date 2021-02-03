@@ -46,7 +46,7 @@ const Profile = () => {
                     borderBottom: "1px solid grey"
                 }} >
                         <div>
-                                <img alt = ""  src="https://images.unsplash.com/photo-1611433216945-3e59dc2de4e0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1100&q=80" 
+                                <img alt = ""  src={state?state.profileImage:"loading"}
                                  style= {{width:"160px", height: "160px",
                                                  borderRadius: "80px",
                                                  margin:"20px",

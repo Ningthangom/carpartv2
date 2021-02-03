@@ -9,6 +9,8 @@ import Profile from "./components/pages/Profile"
 import Signup from "./components/pages/Signup"
 import CreatePost from "./components/pages/CreatePost"
 import UserProfile from "./components/pages/UserProfile"
+import PostsFromFollowing from "./components/pages/PostsFromFollowing"
+
 import {reducer,initialState} from "./reducers/userReducer"
 
 
@@ -58,6 +60,9 @@ const Routing =() => {
                   </Route>
                   <Route path="/profile/:userid">
                         <UserProfile/>
+                  </Route>
+                  <Route path="/postsfromfollowing">
+                        <PostsFromFollowing/>
                   </Route>
        </Switch>
       )

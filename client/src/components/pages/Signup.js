@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 
@@ -8,8 +8,34 @@ const Signup = () => {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
+    const [profilepic,setProfilepic]=useState("")
+    const [urlpropic,setUrlpropic]=useState("")
+    
+    useEffect(()=> {
+        if(urlpropic){
+            uplaodFields()
+        }
 
-    const PostData = () => {
+    },[urlpropic])
+
+    const uploadProfilepic = ()=> {
+                    // Formdata for fileuploading
+                    const data = new FormData()
+                    data.append("file",profilepic)
+                    data.append("upload_preset","carparts_main")
+                    data.append("cloud_name","ningthangom")
+                    fetch("	https://api.cloudinary.com/v1_1/ningthangom/image/upload",{
+                        method:"post",
+                        body:data
+                    })
+                    .then(res=> res.json())
+                    .then(data=>{
+                        setUrlpropic(data.urlpropic)
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+        }
+    const uplaodFields = () => {
         // checking email address
         if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
             M.toast({html: "invalid email address",classes:"#d50000 red accent-4"})
@@ -24,7 +50,8 @@ const Signup = () => {
             body:JSON.stringify({
                 name,
                 password,
-                email
+                email,
+                profileImage:urlpropic
             })
         }).then(res=>res.json())
         .then(data=>{
@@ -35,14 +62,19 @@ const Signup = () => {
                 history.push('/signin')
 
             }
-           
+        
         }).catch(err=> {
             console.log(err)
         })
-     
+
     }
-
-
+    const PostData = () => {
+            if(profilepic) {
+                uploadProfilepic()
+            }
+            uplaodFields()
+        
+        }
 
     return (
         <div className="mycard">
@@ -67,7 +99,19 @@ const Signup = () => {
                        value={password}
                        onChange={(e)=>setPassword(e.target.value) }
                        />
-                       
+                    <div className="file-field input-field">
+                            <div className="btn #3949ab indigo darken-1">
+                                <span>profile Image</span>
+                                <input type="file"
+                                onChange = {(e)=>setProfilepic(e.target.files[0])}
+                                />
+                            </div>
+                            <div className="file-path-wrapper">
+                                
+                                <input className="file-path validate" type="text"/>
+                            </div>
+                    </div>
+                        
                          <button className="btn waves-effect waves-light #2196f3 blue" onClick={PostData}>Sign Up</button>
                          <h6>
                              <Link to="/signin">Already Have an account?</Link>

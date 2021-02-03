@@ -113,14 +113,14 @@ const Home = () => {
 
                 return(
                     <div className="card home-card" key={item._id}>
-                            <h5><Link to={item.postedBy._id !== state.id ? "/profile/"+item.postedBy._id : "/profile"}>{item.postedBy.name}</Link>  {item.postedBy._id === state.id
+                            <h5 style={{padding:"8px"}}><Link to={item.postedBy._id !== state.id ? "/profile/"+item.postedBy._id : "/profile"}>{item.postedBy.name}</Link>  {item.postedBy._id === state.id
                             && <i className="material-icons" style={{
                                 float:"right"
 
                             }}
                             onClick={()=>deletePost(item._id)}
                             >delete</i>
-                            }</h5>
+                            } </h5>
                             <div className="card-mage">
                                 <img alt="" src ={item.image} 
                                 style= {{

@@ -15,7 +15,7 @@ router.get('/protected',requiredLogin, (req,res)=>{
 })
 
 router.post('/signup', (req,res)=> {
-   const {name, email, password} = req.body 
+   const {name, email, password,profileImage} = req.body 
    // checking if all the input field are filed
    if (!email || !password || !name) {
        return res.status(422).json({error: "please file all the inboxes"})
@@ -33,7 +33,10 @@ router.post('/signup', (req,res)=> {
                   
                     email,
                     password:hashedpassword,
-                    name
+                    name,
+                    // profilepic is from model and 
+                    // profileimage is from front-end
+                    profilepic:profileImage
                   
                 })
                 user.save()
@@ -69,8 +72,8 @@ router.post('/signin', (req,res)=> {
                         //  giving user a tokent to access protected resources
                         const token = jwt.sign({_id: savedUser._id},JWT_SECRET)
                         // destructuring the objects
-                        const {_id,name,email,followers,following} = savedUser
-                        res.json({token,_id,name,email,followers,following})
+                        const {_id,name,email,followers,following,profileImage} = savedUser
+                        res.json({token,_id,name,email,followers,following,profileImage})
                     }else {
                         res.status(422).json({error: "Invalid email or password"})
                     }

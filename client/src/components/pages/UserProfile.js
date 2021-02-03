@@ -19,13 +19,20 @@ import axios from 'axios';
 const Profile = () => {
     // set the initial state as null 
     const [userProfile, setUserProfile] = useState(null)
-    // for showing and hiding follow button 
-    const [showfollow,setShowFollow] = useState(true)
+ 
+   
     // for getting the user info
     const {state,dispatch} = useContext(UserContext)
+    console.log("this is state",state)
+    
     // this user id comes from app.js (<Route path="/profile/:userid">)
      const {userid} = useParams() 
     console.log("this is ",userid,"from userprofile")
+       // if there is no id of current login user inside following which is inside state 
+       // then show follow button
+       // else show follow button
+  
+       const [showfollow,setShowFollow] = useState(state?!state.following.includes(userid): true)
 // http://localhost:5000
     useEffect(()=> {
         fetch(`/user/${userid}`,{
@@ -143,7 +150,7 @@ const Profile = () => {
                 borderBottom: "1px solid grey"
             }} >
                     <div>
-                            <img alt = ""  src="https://images.unsplash.com/photo-1611433216945-3e59dc2de4e0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1100&q=80" 
+                            <img alt = ""  src={userProfile.user.profileImage}
                              style= {{width:"160px", height: "160px",
                                              borderRadius: "80px",
                                              margin:"20px",
