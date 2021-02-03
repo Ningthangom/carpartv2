@@ -1,6 +1,9 @@
 import React,{useEffect,useState,useContext} from 'react'
 import {UserContext} from '../../App'
 
+//  import link for making view profile of the account that posted that post
+import {Link} from 'react-router-dom'
+
 
 /* const deletePost = (postid) => {
     console.log("deletePost is firing")
@@ -16,6 +19,7 @@ import {UserContext} from '../../App'
 } */
 const Profile = () => {
     const [myposts, setMyPosts] = useState([])
+    // const [data,setData] = useState([ ])
     // for getting the user info
     const {state,dispatch} = useContext(UserContext)
     console.log("this is state",state)
@@ -32,13 +36,33 @@ const Profile = () => {
         })
 
     },[])
+    const deletePost = (postid) => {
+        // console log will not show in dev tool for long as the page is reloaded 
+        // its believe to be due to onclick function
+        console.log("deletePost is firing")
+        fetch(`/deletepost/${postid}`,{
+            method: "delete",
+            headers: {
+                Authorization: "Bearer "+localStorage.getItem('jwt')
+            }
+        }).then(res=> res.json())
+        .then(result=> {
+            console.log(result)
+              const newData = myposts.filter(item=>{
+                return item._id !== result._id
+            })
+            setMyPosts(newData) 
+        }).catch(err=>{
+            console.log(err)
+        }) 
+}
 
 
-    return (
+    return ( 
         <div style={{
             maxWidth:"550px",
             margin:"0px auto"
-        }}>
+             }}>
                 <div style= {{
                     display:"flex",
                     // ask how to move the tex to the left
@@ -67,46 +91,46 @@ const Profile = () => {
                          onClick={followUser}>follow</button> */}
                         </div>
                 </div>
-                <div className="gallery">
+                    <div className="home">
                     {
-                        myposts.map(item=> {
+                        myposts.map(item => {
+                            console.log(state)
+                            console.log("items from home",item)
+                            console.log(state._id)
+                            console.log(item.interested)
+
                             return(
                                 <div className="card home-card" key={item._id}>
-                               {/*  <h5>{item.postedBy.className}</h5> */}
-                                <div className="card-mage">
-                                    <img alt="" src ={item.image} 
-                                    style= {{
-                                        maxWidth :"500px"
-                                    } } />
-                                </div>
-                                <div className="card-content">
-                                      {/*   <i className="material-icons" style={{color:"red"}}>favorite</i> */}
-                                        <h6>{item.title}</h6>
-                                        <p>{item.body}</p>
-                                        {/* <input type="text" placeholder="add a comment"/> */}
-                                  {/*      <a href="https://www.paypal.com/paypalme/ningthangom"> <button  className="btn waves-light #2196f3 blue" style={{
-                                            margin:"10px"
-                                        }}>edit</button></a>
-                                        <button className="btn waves-light #2196f3 blue"  style={{
-                                            margin:"10px"
-                                        }}>sold</button> */}
-                                          {/* <button className="btn waves-light #2196f3 blue"  style={{
-                                            margin:"10px"
-                                        }} */}
-                                      {/* /*   onClick={deletePost()} */ }
-                                       
-                                        {/* // >cancel</button>  */}
-                                </div>
-                      </div>
-    
-                             /*    <img   className = "item"
-                                src = {item.image} alt={item.title}/> */
+                                        <h5 style={{padding:"8px"}}> {item.postedBy._id === state._id
+                                        && <i className="material-icons" style={{
+                                            float:"right"
+                                        }}
+                                        onClick={()=>deletePost(item._id)}
+                                        >delete</i>
+                                        } </h5>
+                                        <div className="card-mage">
+                                            <img alt="" src ={item.image} 
+                                            style= {{
+                                                maxWidth :"500px",
+
+                                            } } />
+                                        </div>
+                                        <div className="card-content">
+                                                <h6>{item.interested.length} interested</h6>
+                                                <h6>{item.title}</h6>
+                                                <h8>${item.price}</h8>
+                                                <p>{item.body}</p>
+                                            {/*  <input type="text" placeholder="add a comment"/> */}
+                                            
+                                        </div>
+                            </div>
+
                             )
                         })
                     }
-                </div>
-        </div>
+            </div>
+            </div>
     )
-}
+ }
 
 export default Profile

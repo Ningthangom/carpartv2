@@ -9,7 +9,7 @@ const Post = mongoose.model("Post")
 
 router.get('/allpost',requiredLogin,(req,res) => {
     Post.find()
-        .populate("postedBy","_id name")
+        .populate("postedBy","_id name pic")
         .then(posts => {
             res.json({posts})
         })

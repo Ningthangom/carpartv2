@@ -72,7 +72,7 @@ const Home = () => {
           /*   console.log(result) */
               // logic for number of  interested/uninterested 
          const newData = data.map(item => {
-             if(item._id==result._id){
+             if(item._id ===result._id){
                  return result
              }else {
                  return item
@@ -108,12 +108,22 @@ const Home = () => {
           {
               data.map(item => {
                   console.log(state)
-                  console.log(item._id)
+                  console.log("items from home",item)
+                  console.log(state._id)
                   console.log(item.interested)
 
                 return(
                     <div className="card home-card" key={item._id}>
-                            <h5 style={{padding:"8px"}}><Link to={item.postedBy._id !== state.id ? "/profile/"+item.postedBy._id : "/profile"}>{item.postedBy.name}</Link>  {item.postedBy._id === state.id
+                            <h5 style={{padding:"8px"}}>
+                                <Link to={item.postedBy._id !== state._id ? "/profile/"+item.postedBy._id : "/profile"}>
+                                <img alt = ""  src={item.postedBy.pic}
+                                 style= {{width:"40px", height: "40px",
+                                                 borderRadius: "80px",
+                                                 margin:"",
+                                                 /* position:"relative",
+                                                left:"50%" */}} 
+                                />
+                                    {item.postedBy.name}</Link>  {item.postedBy._id === state._id
                             && <i className="material-icons" style={{
                                 float:"right"
 
@@ -132,7 +142,7 @@ const Home = () => {
                                     <i className="material-icons" style={{color:"red"}}>favorite</i>
                                   {/* dot includes is not working or it's not functioning */}
                                   {/* The ternary operator in React */}
-                                    {item.interested.includes(state.id)
+                                    {item.interested.includes(state._id)
                                     ? 
                                          <i className="material-icons" style={{margin:"10px"}} 
                                          onClick={()=>{
@@ -160,7 +170,7 @@ const Home = () => {
                                     <button className="btn waves-light #2196f3 blue"  style={{
                                         margin:"10px"
                                     }}>contact the seller</button>
-                            </div>
+                            </div> 
                   </div>
 
                 )

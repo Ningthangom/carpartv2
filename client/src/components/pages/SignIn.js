@@ -39,6 +39,8 @@ const SignIn = () => {
                 user["email"] = data.email
                 user["id"] = data._id
                 user["name"]=data.name
+                user["pic"]=data.pic
+                
                 localStorage.setItem("jwt",data.token)
                 localStorage.setItem("user",JSON.stringify(user))
                 //the dispatch will go to userReducer
